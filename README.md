@@ -29,7 +29,7 @@ The sample flow contains two tasks - one for data preparation and one for model 
 The code snippet below shows the definition for the data preparation task:
 
 ```
-data_prep_results = run_domino_job(
+data_prep_results = DominoTask(
     name="Prepare data",
     command="python /mnt/code/scripts/prep-data.py",
     environment="Data Prep Environment",
@@ -43,7 +43,7 @@ data_prep_results = run_domino_job(
 )
 ```
 
-As you can use the `run_domino_job` function to create the task with the appropriate parameters. Explaining each parameter in detail:
+As you can use the `DominoTask` function to create the task with the appropriate parameters. Explaining each parameter in detail:
 
 - `name`: The name for the task.
 - `command`: The command that will be used in the Domino Job.
@@ -59,7 +59,7 @@ Inputs can be accessed within Domino Jobs at `/workflow/inputs/<NAME OF INPUT>`.
 The code snippet below shows the definition for the model training task:
 
 ```
-training_results = run_domino_job(
+training_results = DominoTask(
     name="Train model",
     command="python /mnt/code/scripts/train-model.py",
     environment="Training Environment",
@@ -75,6 +75,6 @@ training_results = run_domino_job(
 )
 ```
 
-As you can see, the same `run_domino_job` function is used. A few things to note about the snippet above:
+As you can see, the same `DominoTask` function is used. A few things to note about the snippet above:
 - Different command, environments, and hardware tiers can be used. It doesn't need to be the same as the other steps.
 - The output from the data prep tasks is referenced via `data_prep_results['processed_data']` and it specified as an input to the training task.
