@@ -43,7 +43,7 @@ data_prep_results = DominoTask(
 )
 ```
 
-As you can use the `DominoTask` function to create the task with the appropriate parameters. Explaining each parameter in detail:
+As you can see, we use the `DominoTask` function to create the task with the appropriate parameters. Explaining each parameter in detail:
 
 - `name`: The name for the task.
 - `command`: The command that will be used in the Domino Job.
