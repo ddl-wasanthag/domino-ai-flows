@@ -8,7 +8,7 @@
       "Flows"
     ],
     "mainRepository": {
-      "uri": "https://github.com/ddl-jwu/domino-ai-flows",
+      "uri": "https://github.com/dominodatalab/domino-ai-flows",
       "ref": {
         "type": "commitId",
         "value": "d8091ca3ed10e19d7fa38535db141c673cb82f13"
@@ -19,37 +19,31 @@
       "name": "Domino",
       "link": "https://domino.ai"
     },
-    "created":"2024-04-01T08:22:52.00Z",
+    "created":"2024-05-20T08:22:52.00Z",
     "license": {
       "name": "Apache 2.0",
-      "link": "https://github.com/ddl-jwu/domino-ai-flows?tab=Apache-2.0-1-ov-file"
+      "link": "https://github.com/dominodatalab/domino-ai-flows?tab=Apache-2.0-1-ov-file"
     },
     "data": {
       "name": "This template uses mock data which is included with the repository in the data folder",
-      "link": "https://github.com/ddl-jwu/domino-ai-flows/tree/main/data"
+      "link": "https://github.com/dominodatalab/domino-ai-flows/tree/main/data"
     },
     "dataFormat": "CSV",
     "recommended": false,
-    "prerequisites": [
-      {
-        "value": "This flow must be submitted from the V2 Flyte Env, which is included in this deployment. This will eventually be part of the DSE.",
-        "link": "https://github.com/ddl-jwu/domino-ai-flows"
-      }
-    ],
+    "prerequisites": null,
     "goals": null,
     "hardwareTier": {
-      "value": "The default hardware tier is sufficient to run this sample",
+      "value": "This project works with a the small-k8s tier that is available on all Domino deployments.",
       "link": null
-    },
-    "environmentKey": null,
-    "environmentReqs": {
-      "value": "V2 Flyte Env",
-      "link": "https://github.com/ddl-jwu/domino-ai-flows"
     },
     "importedRepositories": null,
     "supportedDominoVersions": [
       "5.11.0"
     ],
-    "projectSettings": null
+    "projectSettings": null,
+    "test": {
+      "test_command": "pyflyte run --remote workflow.py training_workflow --data_path /mnt/code/data/data.csv",
+      "hardware_tier_id": "small-k8s"
+    }
   }
   

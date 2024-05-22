@@ -2,9 +2,12 @@ from utils.flyte import DominoTask, Input, Output
 from flytekit import workflow
 from flytekit.types.file import FlyteFile
 from flytekit.types.directory import FlyteDirectory
+from typing import TypeVar, NamedTuple
+
+final_outputs = NamedTuple("final_outputs", model=FlyteFile)
 
 @workflow
-def training_workflow(data_path: str) -> FlyteFile: 
+def training_workflow(data_path: str) -> final_outputs: 
     """
     Sample data preparation and training workflow
 
@@ -22,23 +25,23 @@ def training_workflow(data_path: str) -> FlyteFile:
     data_prep_results = DominoTask(
         name="Prepare data",
         command="python /mnt/code/scripts/prep-data.py",
-        environment="Data Prep Environment",
+        environment="Domino Standard Environment Py3.9 R4.3",
         hardware_tier="Small",
         inputs=[
             Input(name="data_path", type=str, value=data_path)
         ],
         outputs=[
-            Output(name="processed_data", type=FlyteFile)
+            Output(name="processed_data", type=FlyteFile[TypeVar("csv")])
         ]
     )
 
     training_results = DominoTask(
         name="Train model",
         command="python /mnt/code/scripts/train-model.py",
-        environment="Training Environment",
-        hardware_tier="Medium",
+        environment="Domino Standard Environment Py3.9 R4.3",
+        hardware_tier="Small",
         inputs=[
-            Input(name="processed_data", type=FlyteFile, value=data_prep_results['processed_data']),
+            Input(name="processed_data", type=FlyteFile[TypeVar("csv")], value=data_prep_results['processed_data']),
             Input(name="epochs", type=int, value=10),
             Input(name="batch_size", type=int, value=32)
         ],
@@ -47,4 +50,4 @@ def training_workflow(data_path: str) -> FlyteFile:
         ]
     )
 
-    return training_results['model']
+    return final_outputs(model=training_results['model'])

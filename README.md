@@ -4,7 +4,7 @@ This repo mocks a sample AI training script using Domino Flows.
 
 The input to this flow is the path to a sample dataset that is provided in this repository.
 
-To run the flow, execute the following command in a workspace: 
+To run the flow, execute the following command in a workspace using the Domino Standard Environment: 
 
 ```
 pyflyte run --remote workflow.py training_workflow --data_path /mnt/code/data/data.csv
@@ -32,7 +32,7 @@ The code snippet below shows the definition for the data preparation task:
 data_prep_results = DominoTask(
     name="Prepare data",
     command="python /mnt/code/scripts/prep-data.py",
-    environment="Data Prep Environment",
+    environment="Domino Standard Environment Py3.9 R4.3",
     hardware_tier="Small",
     inputs=[
         Input(name="data_path", type=str, value=data_path)
@@ -62,8 +62,8 @@ The code snippet below shows the definition for the model training task:
 training_results = DominoTask(
     name="Train model",
     command="python /mnt/code/scripts/train-model.py",
-    environment="Training Environment",
-    hardware_tier="Medium",
+    environment="Domino Standard Environment Py3.9 R4.3",
+    hardware_tier="Small",
     inputs=[
         Input(name="processed_data", type=FlyteFile, value=data_prep_results['processed_data']),
         Input(name="epochs", type=int, value=10),
@@ -76,5 +76,13 @@ training_results = DominoTask(
 ```
 
 As you can see, the same `DominoTask` function is used. A few things to note about the snippet above:
-- Different command, environments, and hardware tiers can be used. It doesn't need to be the same as the other steps.
+- Different command, environments, and hardware tiers can be used in each task. Even though we are using the same ones in this example, it is not a requirement.
 - The output from the data prep tasks is referenced via `data_prep_results['processed_data']` and it specified as an input to the training task.
+
+# Environment Requirements
+
+The project just requires the `Domino Standard Environment` which comes included with all Domino deployments.
+
+# Hardware Requirements
+
+This project works with a the default `small-k8s` tier that comes with all Domino deployments.
