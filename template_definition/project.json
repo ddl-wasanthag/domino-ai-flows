@@ -36,6 +36,10 @@
       "value": "This project works with a the small-k8s tier that is available on all Domino deployments.",
       "link": null
     },
+    "environmentReqs": {
+      "value": "This project works with the Domino Standard Environment",
+      "link": null
+    },
     "importedRepositories": null,
     "supportedDominoVersions": [
       "5.11.0"
