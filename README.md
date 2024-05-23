@@ -12,11 +12,11 @@ pyflyte run --remote workflow.py training_workflow --data_path /mnt/code/data/da
 
 Once you run the command, a direct link to the Flyte console should be returned:
 
-![Execution Link](https://github.com/dominodatalab/domino-ai-flows/blob/8256e3ce6aaffe4e37d962b996dd167a37020f57/screenshots/execution-link.png)
+![Execution Link](https://github.com/dominodatalab/domino-ai-flows/blob/8256e3ce6aaffe4e37d962b996dd167a37020f57/screenshots/execution-link.png?raw=true)
 
 Upon clicking on the link, you should be navigated to a page where you can monitor the execution:
 
-![Monitor](https://github.com/dominodatalab/domino-ai-flows/blob/8256e3ce6aaffe4e37d962b996dd167a37020f57/screenshots/monitor.png)
+![Monitor](https://github.com/dominodatalab/domino-ai-flows/blob/8256e3ce6aaffe4e37d962b996dd167a37020f57/screenshots/monitor.png?raw=true)
 
 # Flow Definition
 
