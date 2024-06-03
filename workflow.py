@@ -1,4 +1,4 @@
-from utils.flyte import DominoTask, Input, Output
+from flytekitplugins.domino.helpers import Input, Output, run_domino_job_task
 from flytekit import workflow
 from flytekit.types.file import FlyteFile
 from flytekit.types.directory import FlyteDirectory
@@ -22,32 +22,34 @@ def training_workflow(data_path: str) -> final_outputs:
     :return: The training results as a model
     """
 
-    data_prep_results = DominoTask(
-        name="Prepare data",
+    data_prep_results = run_domino_job_task(
+        flyte_task_name="Prepare data",
         command="python /mnt/code/scripts/prep-data.py",
-        environment="Domino Standard Environment Py3.9 R4.3",
-        hardware_tier="Small",
+        environment_name="Domino Standard Environment Py3.11 R4.4",
+        hardware_tier_name="Small",
         inputs=[
             Input(name="data_path", type=str, value=data_path)
         ],
-        outputs=[
+        output_specs=[
             Output(name="processed_data", type=FlyteFile[TypeVar("csv")])
-        ]
+        ],
+        use_project_defaults_for_omitted=True
     )
 
-    training_results = DominoTask(
-        name="Train model",
+    training_results = run_domino_job_task(
+        flyte_task_name="Train model",
         command="python /mnt/code/scripts/train-model.py",
-        environment="Domino Standard Environment Py3.9 R4.3",
-        hardware_tier="Small",
+        environment_name="Domino Standard Environment Py3.11 R4.4",
+        hardware_tier_name="Small",
         inputs=[
             Input(name="processed_data", type=FlyteFile[TypeVar("csv")], value=data_prep_results['processed_data']),
             Input(name="epochs", type=int, value=10),
             Input(name="batch_size", type=int, value=32)
         ],
-        outputs=[
+        output_specs=[
             Output(name="model", type=FlyteFile)
-        ]
+        ],
+        use_project_defaults_for_omitted=True
     )
 
     return final_outputs(model=training_results['model'])
