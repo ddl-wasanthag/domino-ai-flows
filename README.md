@@ -86,3 +86,8 @@ The project just requires the `Domino Standard Environment` which comes included
 # Hardware Requirements
 
 This project works with a the default `small-k8s` tier that comes with all Domino deployments.
+
+# License
+This template is licensed under Apache 2.0 and contains the following open source components: 
+
+* Flytekit [Apache 2.0](https://github.com/flyteorg/flytekit/blob/master/LICENSE)
