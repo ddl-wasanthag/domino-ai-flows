@@ -1,18 +1,15 @@
+import os
 import pandas as pd
-import argparse
+from argparse import ArgumentParser
+from flows import read_flow_input, get_output_location
 
-def read_input(input_name):
-    input_location = f"/workflow/inputs/{input_name}"
-    with open(input_location, "r") as file:
-        contents = file.read()
-        return contents
+parser = ArgumentParser(description='Data preparation script')
+parser.add_argument('--local', action='store_true', help='Set this flag to indicate local testing (instead of triggering via flows)')
+parser.add_argument('--data_path', type=str, default=read_flow_input(name='data_path'), help='The path of the input dataset.')
+args = parser.parse_args()
 
-# Read input data. Inputs are stored in a blob at /workflow/inputs/<NAME OF INPUT>.
-# For file inputs, the blob is the file input itself. 
-# For primitive type inputs like strings, integer, booleans, etc, they are stored inside the blob and must be read in by opening the file.
-named_input = "data_path"
-csv_file = read_input(named_input)
-df = pd.read_csv(csv_file)
+# Read input
+df = pd.read_csv(data_path) 
 
 # Process data
 print(df)
@@ -20,7 +17,7 @@ print("Preparing the data")
 df = df.drop('a', axis=1)
 print(df)
 
-# Write output. Outputs must be written to /workflow/outputs/<NAME OF OUTPUT> for it to be tracked.
-named_output = "processed_data"
-df.to_csv("/workflow/outputs/{}".format(named_output))
-
+# Write output
+output_name = "processed_data"
+output_location = get_output_location(name=processed_data, local=args.local)
+df.to_csv(f'{output_location}/{output_name}')
