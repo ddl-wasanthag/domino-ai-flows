@@ -1,3 +1,5 @@
+import os 
+
 '''
 Helper function to read inputs when inside a job triggered by Domino Flows.
 
@@ -13,14 +15,13 @@ Returns:
     Any: Either the input file or value
 '''
 def read_flow_input(name: str, is_file: bool=False):
-    # input_location = f"/workflow/inputs/{name}"
-    # if is_file:
-    #     return input_location # Direction return the blob for file inputs
-    # else:
-    #     with open(input_location, "r") as file: # Read the contents of the blob for other inputs
-    #         contents = file.read()
-    #         return contents
-    return '/mnt/code/data/data.csv'
+    input_location = f"/workflow/inputs/{name}"
+    if is_file:
+        return input_location # Directly return the blob for file inputs
+    else:
+        with open(input_location, "r") as file: # Read the contents of the blob for other inputs
+            contents = file.read()
+            return contents
 
 
 '''
@@ -36,7 +37,7 @@ Args:
 Returns:
     str: The root path of the output folder
 '''
-def get_output_location(local: bool=False):
+def get_output_location(name=str, local: bool=False):
     output_location = ''
     if local:
         output_location = '/mnt/code/outputs'
@@ -44,4 +45,4 @@ def get_output_location(local: bool=False):
             os.makedirs(output_location)
     else:
         output_location = '/workflow/outputs'
-    return output_location
+    return f'{output_location}/{name}'
