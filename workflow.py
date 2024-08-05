@@ -46,7 +46,7 @@ def training_workflow(data_path: str) -> final_outputs:
             Input(name="batch_size", type=int, value=32)
         ],
         output_specs=[
-            Output(name="model", type=FlyteFile)
+            Output(name="model", type=FlyteFile[TypeVar("pkl")])
         ],
         use_project_defaults_for_omitted=True
     )
