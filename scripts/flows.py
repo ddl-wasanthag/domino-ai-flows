@@ -1,5 +1,3 @@
-import os 
-
 '''
 Helper function to read inputs when inside a job triggered by Domino Flows.
 
@@ -22,27 +20,3 @@ def read_flow_input(name: str, is_file: bool=False):
         with open(input_location, "r") as file: # Read the contents of the blob for other inputs
             contents = file.read()
             return contents
-
-
-'''
-Helper function to retrieve the path where outputs should be written too.
-
-For jobs triggered by flows, outputs must be written to /workflow/outputs/<NAME OF INPUT>.
-For local testing, we will write the outputs to a temporary /mnt/code/outputs folder
-
-Args:
-    name (str): The name of the input
-    is_file (bool): Whether the input type is a file or not.
-
-Returns:
-    str: The root path of the output folder
-'''
-def get_output_location(name=str, local: bool=False):
-    output_location = ''
-    if local:
-        output_location = '/mnt/code/outputs'
-        if not os.path.exists(output_location):
-            os.makedirs(output_location)
-    else:
-        output_location = '/workflow/outputs'
-    return f'{output_location}/{name}'
