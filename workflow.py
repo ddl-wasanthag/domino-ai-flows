@@ -47,6 +47,8 @@ def training_workflow(data_path: str) -> final_outputs:
         output_specs=[
             Output(name="model", type=FlyteFile)
         ],
+        cache=True,
+        cache_version="1.0",
         use_project_defaults_for_omitted=True
     )
 
