@@ -1,4 +1,5 @@
 from flytekitplugins.domino.helpers import Input, Output, run_domino_job_task
+from flytekitplugins.domino.task import DominoJobConfig, DominoJobTask
 from flytekit import workflow
 from flytekit.types.file import FlyteFile
 from flytekit.types.directory import FlyteDirectory
@@ -47,8 +48,6 @@ def training_workflow(data_path: str) -> final_outputs:
         output_specs=[
             Output(name="model", type=FlyteFile)
         ],
-        cache=True,
-        cache_version="1.0",
         use_project_defaults_for_omitted=True
     )
 
