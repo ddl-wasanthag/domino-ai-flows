@@ -14,7 +14,7 @@ args = parser.parse_args()
 data_path = '/mnt/code/outputs/processed_data'
 output_location = '/mnt/code/outputs'
 if args.local == False:
-    data_path = read_flow_input(name='processed_data')
+    data_path = read_flow_input(name='processed_data', is_file=True)
     output_location = '/workflow/outputs'
 
 # Read data input
