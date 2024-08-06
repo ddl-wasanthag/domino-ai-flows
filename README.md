@@ -16,7 +16,7 @@ pyflyte run --remote workflow.py training_workflow
 To override the default dataset inputs:
 
 ```
-pyflyte run --remote workflow.py training_workflow --data_path_A /other/datasetA.csv --data_path_B /other/datasetB.csv
+pyflyte run --remote workflow.py training_workflow --data_path_A /mnt/data/flows/datasetA.csv --data_path_B /mnt/data/flows/datasetB.csv
 ```
 
 Once you run the command, navigate to `Flows page > Runs pivot > Run name` to monitor the flow execution:
