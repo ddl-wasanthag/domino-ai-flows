@@ -15,7 +15,7 @@ parser.add_argument('--num_estimators', type=str, default=100, help='The number 
 parser.add_argument('--output_folder', type=str, default='/mnt/code/outputs', help='Path to output results. Only used during local testing. Flow triggered jobs will use task output directory.')
 args = parser.parse_args()
 
-# Set variables based on whether it is executed locally or triggered by a flow
+# Read inputs
 processed_data = read_input(name='processed_data', args=args, is_file=True)
 num_estimators = read_input(name='num_estimators', args=args)
 
