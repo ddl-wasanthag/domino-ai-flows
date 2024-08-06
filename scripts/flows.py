@@ -1,3 +1,5 @@
+import os
+from argparse import Namespace
 '''
 Helper function to read inputs when inside a job triggered by Domino Flows.
 
@@ -12,11 +14,32 @@ Args:
 Returns:
     Any: Either the input file or value
 '''
-def read_flow_input(name: str, is_file: bool=False):
-    input_location = f'/workflow/inputs/{name}'
-    if is_file:
-        return input_location # Directly return the blob for file inputs
+# def read_flow_input(name: str, is_file: bool=False):
+#     input_location = f'/workflow/inputs/{name}'
+#     if is_file:
+#         return input_location # Directly return the blob for file inputs
+#     else:
+#         with open(input_location, 'r') as file: # Read the contents of the blob for other inputs
+#             contents = file.read()
+#             return contents
+
+def read_input(name: str, args: Namespace, is_file: bool=False):
+    if os.environ.get('DOMINO_IS_WORKFLOW_JOB') == 'false':
+        return getattr(args, name) # Local execution, return the arguments in command line
     else:
-        with open(input_location, 'r') as file: # Read the contents of the blob for other inputs
-            contents = file.read()
-            return contents
+        input_location = f'/workflow/inputs/{name}'
+        if is_file:
+            return input_location # Directly return the blob for file inputs
+        else:
+            with open(input_location, 'r') as file: # Read the contents of the blob for other inputs
+                contents = file.read()
+                return contents
+
+def get_output_location(name: str, args: Namespace):
+    if os.environ.get('DOMINO_IS_WORKFLOW_JOB') == 'false': # Local execution, return a default output folder
+        output_folder = args.output_folder
+        os.makedirs(output_folder, exist_ok=True)
+        return f'{output_folder}/{name}'
+    else:
+        output_folder = '/workflow/outputs' # Flow execution, return the outputs folder
+        return f'{output_folder}/{name}'

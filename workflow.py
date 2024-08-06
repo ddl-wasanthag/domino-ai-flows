@@ -23,7 +23,7 @@ def training_workflow(data_path_A: str='/mnt/code/data/datasetA.csv', data_path_
 
     To override the default inputs:
 
-    pyflyte run --remote workflow.py training_workflow --data_path_A /other/datasetA.csv --data_path_B /other/datasetB.csv
+    pyflyte run --remote workflow.py training_workflow --data_path_A /mnt/data/john-training-flow/datasetA.csv --data_path_B /mnt/data/john-training-flow/datasetB.csv
 
     :param data_path_A: Path to datasetA
     :param data_path_B: Path to datasetB 
