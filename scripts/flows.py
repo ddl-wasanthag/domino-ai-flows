@@ -1,7 +1,8 @@
 import os
 from argparse import Namespace
+
 '''
-Helper function to read inputs when inside a job triggered by Domino Flows.
+Helper function reading flow inputs. If the script was not triggered by a flow, it will return command line arguments provided by the user.
 
 All inputs are stored in a blob at /workflow/inputs/<NAME OF INPUT>.
 For file input types, the blob is the file input itself.
@@ -9,6 +10,7 @@ For all other supported input types (str, int, bool, etc), they are stored as co
 
 Args:
     name (str): The name of the input
+    args (argparse.Namespace): Command line arguments
     is_file (bool): Whether the input type is a file or not.
 
 Returns:
@@ -26,6 +28,20 @@ def read_input(name: str, args: Namespace, is_file: bool=False):
                 contents = file.read()
                 return contents
 
+'''
+Helper function for getting a flow output location. If the script was not triggered by a flow, it will use the output folder provided through the command line argument.
+
+All inputs are stored in a blob at /workflow/inputs/<NAME OF INPUT>.
+For file input types, the blob is the file input itself.
+For all other supported input types (str, int, bool, etc), they are stored as conents inside the blob.
+
+Args:
+    name (str): The name of the output
+    args (argparse.Namespace): Command line arguments
+
+Returns:
+    Any: The path to where the output should be written to
+'''
 def get_output_location(name: str, args: Namespace):
     if os.environ.get('DOMINO_IS_WORKFLOW_JOB') == 'false': # Local execution, return a default output folder
         output_folder = args.output_folder

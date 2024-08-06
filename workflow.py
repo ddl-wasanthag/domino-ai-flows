@@ -79,7 +79,7 @@ def training_workflow(data_path_A: str='/mnt/code/data/datasetA.csv', data_path_
         environment_name='Data Preparation Environment',
         hardware_tier_name='Medium',
         inputs=[
-            Input(name='data_path', type=FlyteFile[TypeVar('csv')], value=task3['merged_data'])
+            Input(name='merged_data', type=FlyteFile[TypeVar('csv')], value=task3['merged_data'])
         ],
         output_specs=[
             Output(name='processed_data', type=FlyteFile[TypeVar('csv')])

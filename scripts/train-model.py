@@ -10,17 +10,17 @@ from sklearn.metrics import accuracy_score, classification_report
 
 # Argument parser for allowing user to set inputs during location execution
 parser = ArgumentParser(description='Model training script.')
-parser.add_argument('--data_path', type=str, default='/mnt/code/outputs/processed_data', help='Path to the input data. Only used during local testing. Flow triggered jobs will use task inputs.')
+parser.add_argument('--processed_data', type=str, default='/mnt/code/outputs/processed_data', help='Path to the input data. Only used during local testing. Flow triggered jobs will use task inputs.')
 parser.add_argument('--num_estimators', type=str, default=100, help='The number of trees in the forest. Only used during local testing. Flow triggered jobs will use task inputs.')
 parser.add_argument('--output_folder', type=str, default='/mnt/code/outputs', help='Path to output results. Only used during local testing. Flow triggered jobs will use task output directory.')
 args = parser.parse_args()
 
 # Set variables based on whether it is executed locally or triggered by a flow
-data_path = read_input(name='data_path', args=args, is_file=True)
+processed_data = read_input(name='processed_data', args=args, is_file=True)
 num_estimators = read_input(name='num_estimators', args=args)
 
 # Load data
-df = pd.read_csv(data_path) 
+df = pd.read_csv(processed_data) 
 
 # Separate features and labels
 X = df.drop(columns=['Species'])
