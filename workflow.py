@@ -1,5 +1,4 @@
 from flytekitplugins.domino.helpers import Input, Output, run_domino_job_task
-from flytekitplugins.domino.task import DatasetSnapshot
 from flytekit import workflow
 from flytekit.types.file import FlyteFile
 from flytekit.types.directory import FlyteDirectory
@@ -8,7 +7,7 @@ from typing import TypeVar, NamedTuple
 final_outputs = NamedTuple('final_outputs', model=FlyteFile[TypeVar('pkl')])
 
 @workflow
-def training_workflow(data_path_a: str='/mnt/code/data/datasetA.csv', data_path_b: str='/mnt/code/data/datasetB.csv') -> final_outputs: 
+def training_workflow(data_path_a: str, data_path_b: str) -> final_outputs: 
     '''
     Sample data preparation and training flow. This flow:
     
@@ -19,11 +18,7 @@ def training_workflow(data_path_a: str='/mnt/code/data/datasetA.csv', data_path_
 
     To run this flow, execute the following line in the terminal
 
-    pyflyte run --remote workflow.py training_workflow 
-
-    To override the default inputs:
-
-    pyflyte run --remote workflow.py training_workflow --data_path_a /mnt/data/snapshots/flows/1/datasetA.csv --data_path_b /mnt/data/snapshots/flows/1/datasetB.csv
+    pyflyte run --remote workflow.py training_workflow --data_path_a /mnt/code/data/datasetA.csv --data_path_b /mnt/code/data/datasetB.csv
 
     :param data_path_a: Path to datasetA
     :param data_path_b: Path to datasetB 
@@ -41,7 +36,6 @@ def training_workflow(data_path_a: str='/mnt/code/data/datasetA.csv', data_path_
         output_specs=[
             Output(name='datasetA', type=FlyteFile[TypeVar('csv')])
         ],
-        dataset_snapshots=[DatasetSnapshot(Id="66b284ee06a5593e3c8f8386", Version=1)],
         use_project_defaults_for_omitted=True
     )
 
@@ -56,7 +50,6 @@ def training_workflow(data_path_a: str='/mnt/code/data/datasetA.csv', data_path_
         output_specs=[
             Output(name='datasetB', type=FlyteFile[TypeVar('csv')])
         ],
-        dataset_snapshots=[DatasetSnapshot(Id="66b284ee06a5593e3c8f8386", Version=1)],
         use_project_defaults_for_omitted=True
     )
 
@@ -72,7 +65,6 @@ def training_workflow(data_path_a: str='/mnt/code/data/datasetA.csv', data_path_
         output_specs=[
             Output(name='merged_data', type=FlyteFile[TypeVar('csv')])
         ],
-        dataset_snapshots=[],
         use_project_defaults_for_omitted=True
     )
 
@@ -87,7 +79,6 @@ def training_workflow(data_path_a: str='/mnt/code/data/datasetA.csv', data_path_
         output_specs=[
             Output(name='processed_data', type=FlyteFile[TypeVar('csv')])
         ],
-        dataset_snapshots=[],
         use_project_defaults_for_omitted=True
     )
 
@@ -103,7 +94,6 @@ def training_workflow(data_path_a: str='/mnt/code/data/datasetA.csv', data_path_
         output_specs=[
             Output(name='model', type=FlyteFile[TypeVar('pkl')])
         ],
-        dataset_snapshots=[],
         use_project_defaults_for_omitted=True
     )
 
