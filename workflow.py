@@ -14,10 +14,10 @@ def training_workflow(data_path_A: str='/mnt/code/data/datasetA.csv', data_path_
     
         1. Loads two datasets in from different sources
         2. Merges the data together
-        3. Does data preprocessing
+        3. Does some data preprocessing
         4. Trains a model using the processed data
 
-    To run this workflow, execute the following line in the terminal
+    To run this flow, execute the following line in the terminal
 
     pyflyte run --remote workflow.py training_workflow 
 
