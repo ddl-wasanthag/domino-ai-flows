@@ -45,7 +45,7 @@ print('\nTraining set size:', X_train.shape)
 print('Testing set size:', X_test.shape)
 
 # Train a model (e.g., Random Forest Classifier)
-model = RandomForestClassifier(random_state=42, num_estimators=num_estimators)
+model = RandomForestClassifier(random_state=42, n_estimators=int(num_estimators))
 model.fit(X_train, y_train)
 
 # Evaluate the model on the testing set
