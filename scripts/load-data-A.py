@@ -16,6 +16,6 @@ data_path = read_input(name='data_path', args=args)
 print('Loading in dataset A...')
 df = pd.read_csv(data_path) 
 
-# Write output. 
+# Write output
 output_location = get_output_location(name='datasetA', args=args)
 df.to_csv(output_location, index=False)

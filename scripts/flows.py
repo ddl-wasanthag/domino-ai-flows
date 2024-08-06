@@ -14,15 +14,6 @@ Args:
 Returns:
     Any: Either the input file or value
 '''
-# def read_flow_input(name: str, is_file: bool=False):
-#     input_location = f'/workflow/inputs/{name}'
-#     if is_file:
-#         return input_location # Directly return the blob for file inputs
-#     else:
-#         with open(input_location, 'r') as file: # Read the contents of the blob for other inputs
-#             contents = file.read()
-#             return contents
-
 def read_input(name: str, args: Namespace, is_file: bool=False):
     if os.environ.get('DOMINO_IS_WORKFLOW_JOB') == 'false':
         return getattr(args, name) # Local execution, return the arguments in command line
