@@ -23,7 +23,7 @@ num_estimators = read_input(name='num_estimators', args=args)
 df = pd.read_csv(data_path) 
 
 # Separate features and labels
-X = df.drop(columns=['Id', 'Species'])
+X = df.drop(columns=['Species'])
 y = df['Species']
 
 # Encode labels as integers
