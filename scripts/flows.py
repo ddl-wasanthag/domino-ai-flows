@@ -2,7 +2,7 @@ import os
 from argparse import Namespace
 
 '''
-Helper function reading flow inputs. If the script was not triggered by a flow, it will return command line arguments provided by the user.
+Helper function for reading flow inputs. If the script was not triggered by a flow, it will return command line arguments provided by the user.
 
 All inputs are stored in a blob at /workflow/inputs/<NAME OF INPUT>.
 For file input types, the blob is the file input itself.
@@ -31,9 +31,7 @@ def read_input(name: str, args: Namespace, is_file: bool=False):
 '''
 Helper function for getting a flow output location. If the script was not triggered by a flow, it will use the output folder provided through the command line argument.
 
-All inputs are stored in a blob at /workflow/inputs/<NAME OF INPUT>.
-For file input types, the blob is the file input itself.
-For all other supported input types (str, int, bool, etc), they are stored as conents inside the blob.
+All outputs must be stored in a blob at /workflow/outputs/<NAME OF INPUT>
 
 Args:
     name (str): The name of the output
