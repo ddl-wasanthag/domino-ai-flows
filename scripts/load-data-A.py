@@ -19,13 +19,8 @@ if args.local == False:
 os.makedirs(output_location, exist_ok=True)
 
 # Read data input
+print('Loading in dataset A...')
 df = pd.read_csv(data_path) 
-
-# Process data
-print(df)
-print('Preparing the data')
-df = df.drop('RandomColumn', axis=1)
-print(df)
 
 # Write output. In flows, outputs must be written to /workflow/outputs/<NAME OF OUTPUT>.
 output_name = 'datasetA'

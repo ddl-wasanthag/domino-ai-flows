@@ -1,14 +1,7 @@
 import os
-import pickle
-import shutil
 import pandas as pd
-from time import sleep
 from argparse import ArgumentParser
 from flows import read_flow_input
-from sklearn.preprocessing import LabelEncoder
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, classification_report
 
 # Argument parser for allowing user to toggle between local and flow execution
 parser = ArgumentParser(description='Model training script.')
@@ -34,9 +27,9 @@ b = pd.read_csv(datasetB, index_col='Id')
 
 # Merge the data together
 print('Merging data...')
-merged_data = pd.concat([a, a], axis=0).reset_index(drop=True)
-print(merged_data)
+merged = pd.concat([a, a], axis=0).reset_index(drop=True)
+print(merged)
 
 # Write output. In flows, outputs must be written to /workflow/outputs/<NAME OF OUTPUT>.
-output_name = 'processed_data'
-merged_data.to_csv(f'{output_location}/{output_name}', index_label='Id')
+output_name = 'merged_data'
+merged.to_csv(f'{output_location}/{output_name}', index_label='Id')

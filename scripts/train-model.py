@@ -1,8 +1,6 @@
 import os
 import pickle
-import shutil
 import pandas as pd
-from time import sleep
 from argparse import ArgumentParser
 from flows import read_flow_input
 from sklearn.preprocessing import LabelEncoder
@@ -40,8 +38,8 @@ y_encoded = label_encoder.fit_transform(y)
 X_train, X_test, y_train, y_test = train_test_split(
     X, y_encoded, test_size=0.2, random_state=42
 )
-print("\nTraining set size:", X_train.shape)
-print("Testing set size:", X_test.shape)
+print('\nTraining set size:', X_train.shape)
+print('Testing set size:', X_test.shape)
 
 # Train a model (e.g., Random Forest Classifier)
 model = RandomForestClassifier(random_state=42)
@@ -52,8 +50,8 @@ y_pred = model.predict(X_test)
 
 # Calculate accuracy
 accuracy = accuracy_score(y_test, y_pred)
-print("\nModel Accuracy on Test Set:", accuracy)
-print("\nClassification Report:")
+print('\nModel Accuracy on Test Set:', accuracy)
+print('\nClassification Report:')
 print(classification_report(y_test, y_pred, target_names=label_encoder.classes_))
 
 # Write the model as an output. In flows, outputs must be written to /workflow/outputs/<NAME OF OUTPUT>.
