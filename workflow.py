@@ -10,16 +10,23 @@ final_outputs = NamedTuple('final_outputs', model=FlyteFile[TypeVar('pkl')])
 @workflow
 def training_workflow(data_path_A: str='/mnt/code/data/datasetA.csv', data_path_B: str='/mnt/code/data/datasetB.csv') -> final_outputs: 
     '''
-    Sample data preparation and training workflow
+    Sample data preparation and training flow. This flow:
+    
+        1. Loads two datasets in from different sources
+        2. Merges the data together
+        3. Does data preprocessing
+        4. Trains a model using the processed data
 
-    This workflow accepts a path to a CSV for some initial input and simulates
-    the processing of the data and usage of the processed data in a training job.
+    To run this workflow, execute the following line in the terminal
 
-    To run this workflowp, execute the following line in the terminal
+    pyflyte run --remote workflow.py training_workflow 
 
-    pyflyte run --remote workflow.py training_workflow --data_path /mnt/code/data/data.csv
+    To override the default inputs:
 
-    :param data_path: Path of the CSV file data
+    pyflyte run --remote workflow.py training_workflow --data_path_A /other/datasetA.csv --data_path_B /other/datasetB.csv
+
+    :param data_path_A: Path to datasetA
+    :param data_path_B: Path to datasetB 
     :return: The training results as a model
     '''
 

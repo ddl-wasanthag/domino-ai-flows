@@ -2,12 +2,10 @@
 
 This repo mocks a sample AI training script using Domino Flows. 
 
-The input to this flow is the path to a sample dataset that is provided in this repository.
-
 To run the flow, execute the following command in a workspace using the Domino Standard Environment: 
 
 ```
-pyflyte run --remote workflow.py training_workflow --data_path /mnt/code/data/data.csv
+pyflyte run --remote workflow.py training_workflow 
 ```
 
 Once you run the command, a direct link to the Flyte console should be returned:
