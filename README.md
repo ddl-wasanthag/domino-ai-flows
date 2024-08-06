@@ -21,11 +21,11 @@ pyflyte run --remote workflow.py training_workflow --data_path_A /other/datasetA
 
 Once you run the command, navigate to `Flows page > Runs pivot > Run name` to monitor the flow execution:
 
-![Execution Link](https://github.com/dominodatalab/domino-ai-flows/blob/8256e3ce6aaffe4e37d962b996dd167a37020f57/screenshots/run.png?raw=true)
+![Execution Link](https://github.com/ddl-jwu/domino-ai-flows/blob/00f667768b18e28985aeda8721ca8e1b8c92a9c4/screenshots/run.png?raw=true)
 
 Clicking on the `View graph` button at the top-right of the runs view will take you to the the Flyte UI where you can see a graph view of the flow:
 
-![Monitor](https://github.com/dominodatalab/domino-ai-flows/blob/8256e3ce6aaffe4e37d962b996dd167a37020f57/screenshots/graph.png?raw=true)
+![Monitor](https://github.com/ddl-jwu/domino-ai-flows/blob/00f667768b18e28985aeda8721ca8e1b8c92a9c4/screenshots/graph.png?raw=true)
 
 # Flow Definition
 
