@@ -5,10 +5,10 @@ from flytekit.types.file import FlyteFile
 from flytekit.types.directory import FlyteDirectory
 from typing import TypeVar, NamedTuple
 
-final_outputs = NamedTuple("final_outputs", model=FlyteFile)
+final_outputs = NamedTuple("final_outputs", model=FlyteFile[TypeVar("pkl")])
 
 @workflow
-def training_workflow(data_path: str) -> final_outputs: 
+def training_workflow(data_source_A: str, data_source_B: str) -> final_outputs: 
     """
     Sample data preparation and training workflow
 
@@ -23,12 +23,39 @@ def training_workflow(data_path: str) -> final_outputs:
     :return: The training results as a model
     """
 
-    data_prep_results = run_domino_job_task(
-        flyte_task_name="Prepare data",
-        command="python /mnt/code/scripts/prep-data.py",
+    load_data_A_results = run_domino_job_task(
+        flyte_task_name="Load data source A",
+        command="python /mnt/code/scripts/load-data-A.py",
         hardware_tier_name="Small",
         inputs=[
-            Input(name="data_path", type=str, value=data_path)
+            Input(name="data_path", type=str, value=data_source_A)
+        ],
+        output_specs=[
+            Output(name="data_A", type=FlyteFile[TypeVar("csv")])
+        ],
+        use_project_defaults_for_omitted=True
+    )
+
+    load_data_B_results = run_domino_job_task(
+        flyte_task_name="Load data source B",
+        command="python /mnt/code/scripts/load-data-B.py",
+        hardware_tier_name="Small",
+        inputs=[
+            Input(name="data_path", type=str, value=data_source_B)
+        ],
+        output_specs=[
+            Output(name="data_B", type=FlyteFile[TypeVar("csv")])
+        ],
+        use_project_defaults_for_omitted=True
+    )
+
+    data_prep_results = run_domino_job_task(
+        flyte_task_name="Prepare data",
+        command="python /mnt/code/scripts/merge-data.py",
+        hardware_tier_name="Small",
+        inputs=[
+            Input(name="source_data_A", type=FlyteFile[TypeVar("csv")], value=load_data_A_results['data_A']),
+            Input(name="source_data_B", type=FlyteFile[TypeVar("csv")], value=load_data_B_results['data_B'])
         ],
         output_specs=[
             Output(name="processed_data", type=FlyteFile[TypeVar("csv")])
