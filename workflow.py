@@ -8,7 +8,7 @@ from typing import TypeVar, NamedTuple
 final_outputs = NamedTuple("final_outputs", model=FlyteFile[TypeVar("pkl")])
 
 @workflow
-def training_workflow(data_source_A: str, data_source_B: str) -> final_outputs: 
+def training_workflow(data_path_A: str='/mnt/code/data/datasetA.csv', data_path_B: str='/mnt/code/data/datasetB.csv') -> final_outputs: 
     """
     Sample data preparation and training workflow
 
@@ -23,39 +23,39 @@ def training_workflow(data_source_A: str, data_source_B: str) -> final_outputs:
     :return: The training results as a model
     """
 
-    load_data_A_results = run_domino_job_task(
-        flyte_task_name="Load data source A",
-        command="python /mnt/code/scripts/load-data-A.py",
+    task1 = run_domino_job_task(
+        flyte_task_name="Load Dataset A",
+        command="python /mnt/code/scripts/load-dataset-A.py",
         hardware_tier_name="Small",
         inputs=[
-            Input(name="data_path", type=str, value=data_source_A)
+            Input(name="data_path", type=str, value=data_path_A)
         ],
         output_specs=[
-            Output(name="data_A", type=FlyteFile[TypeVar("csv")])
+            Output(name="datasetA", type=FlyteFile[TypeVar("csv")])
         ],
         use_project_defaults_for_omitted=True
     )
 
-    load_data_B_results = run_domino_job_task(
-        flyte_task_name="Load data source B",
-        command="python /mnt/code/scripts/load-data-B.py",
+    task2 = run_domino_job_task(
+        flyte_task_name="Load Dataset B",
+        command="python /mnt/code/scripts/load-dataset-B.py",
         hardware_tier_name="Small",
         inputs=[
-            Input(name="data_path", type=str, value=data_source_B)
+            Input(name="data_path", type=str, value=data_path_B)
         ],
         output_specs=[
-            Output(name="data_B", type=FlyteFile[TypeVar("csv")])
+            Output(name="datasetB", type=FlyteFile[TypeVar("csv")])
         ],
         use_project_defaults_for_omitted=True
     )
 
-    data_prep_results = run_domino_job_task(
-        flyte_task_name="Prepare data",
+    task3 = run_domino_job_task(
+        flyte_task_name="Merge Datasets",
         command="python /mnt/code/scripts/merge-data.py",
         hardware_tier_name="Small",
         inputs=[
-            Input(name="source_data_A", type=FlyteFile[TypeVar("csv")], value=load_data_A_results['data_A']),
-            Input(name="source_data_B", type=FlyteFile[TypeVar("csv")], value=load_data_B_results['data_B'])
+            Input(name="datasetA", type=FlyteFile[TypeVar("csv")], value=task1['datasetA']),
+            Input(name="datasetB", type=FlyteFile[TypeVar("csv")], value=task2['datasetB'])
         ],
         output_specs=[
             Output(name="processed_data", type=FlyteFile[TypeVar("csv")])
@@ -63,12 +63,12 @@ def training_workflow(data_source_A: str, data_source_B: str) -> final_outputs:
         use_project_defaults_for_omitted=True
     )
 
-    training_results = run_domino_job_task(
-        flyte_task_name="Train model",
+    task4 = run_domino_job_task(
+        flyte_task_name="Train Model",
         command="python /mnt/code/scripts/train-model.py",
         hardware_tier_name="Small",
         inputs=[
-            Input(name="processed_data", type=FlyteFile[TypeVar("csv")], value=data_prep_results['processed_data']),
+            Input(name="processed_data", type=FlyteFile[TypeVar("csv")], value=task3['processed_data']),
             Input(name="epochs", type=int, value=10),
             Input(name="batch_size", type=int, value=32)
         ],
@@ -78,4 +78,4 @@ def training_workflow(data_source_A: str, data_source_B: str) -> final_outputs:
         use_project_defaults_for_omitted=True
     )
 
-    return final_outputs(model=training_results['model'])
+    return final_outputs(model=task4['model'])

@@ -6,7 +6,7 @@ from flows import read_flow_input
 # Argument parser for allowing user to toggle between local and flow execution
 parser = ArgumentParser(description='Data preparation script.')
 parser.add_argument('--local', action='store_true', help='Set this flag to indicate local testing (instead of triggering via flows)')
-parser.add_argument('--data_path', type=str, default='/mnt/code/data/data_source_B.csv', help='Path to the input data. Only used during local testing. Flow triggered jobs will use task inputs.')
+parser.add_argument('--data_path', type=str, default='/mnt/code/data/datasetB.csv', help='Path to the input data. Only used during local testing. Flow triggered jobs will use task inputs.')
 parser.add_argument('--output_location', type=str, default='/mnt/code/outputs', help='Path to output results. Only used during local testing. Flow triggered jobs will use task output directory.')
 args = parser.parse_args()
 
@@ -28,5 +28,5 @@ df = df.drop('RandomColumn', axis=1)
 print(df)
 
 # Write output. In flows, outputs must be written to /workflow/outputs/<NAME OF OUTPUT>.
-output_name = 'data_B'
+output_name = 'datasetB'
 df.to_csv(f'{output_location}/{output_name}', index=False)
