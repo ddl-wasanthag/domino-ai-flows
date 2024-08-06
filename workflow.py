@@ -33,6 +33,7 @@ def training_workflow(data_path_A: str='/mnt/code/data/datasetA.csv', data_path_
     task1 = run_domino_job_task(
         flyte_task_name='Load Data A',
         command='python /mnt/code/scripts/load-data-A.py',
+        environment_name='Domino Standard Environment Py3.10 R4.4',
         hardware_tier_name='Small',
         inputs=[
             Input(name='data_path', type=str, value=data_path_A)
@@ -46,6 +47,7 @@ def training_workflow(data_path_A: str='/mnt/code/data/datasetA.csv', data_path_
     task2 = run_domino_job_task(
         flyte_task_name='Load Data B',
         command='python /mnt/code/scripts/load-data-B.py',
+        environment_name='Domino Standard Environment Py3.10 R4.4',
         hardware_tier_name='Small',
         inputs=[
             Input(name='data_path', type=str, value=data_path_B)
@@ -59,7 +61,8 @@ def training_workflow(data_path_A: str='/mnt/code/data/datasetA.csv', data_path_
     task3 = run_domino_job_task(
         flyte_task_name='Merge Data',
         command='python /mnt/code/scripts/merge-data.py',
-        hardware_tier_name='Small',
+        environment_name='Domino Standard Environment Py3.10 R4.4',
+        hardware_tier_name='Medium',
         inputs=[
             Input(name='datasetA', type=FlyteFile[TypeVar('csv')], value=task1['datasetA']),
             Input(name='datasetB', type=FlyteFile[TypeVar('csv')], value=task2['datasetB'])
@@ -73,7 +76,8 @@ def training_workflow(data_path_A: str='/mnt/code/data/datasetA.csv', data_path_
     task4 = run_domino_job_task(
         flyte_task_name='Process Data',
         command='python /mnt/code/scripts/process-data.py',
-        hardware_tier_name='Small',
+        environment_name='Data Preparation Environment',
+        hardware_tier_name='Medium',
         inputs=[
             Input(name='data_path', type=FlyteFile[TypeVar('csv')], value=task3['merged_data'])
         ],
@@ -86,11 +90,11 @@ def training_workflow(data_path_A: str='/mnt/code/data/datasetA.csv', data_path_
     task5 = run_domino_job_task(
         flyte_task_name='Train Model',
         command='python /mnt/code/scripts/train-model.py',
-        hardware_tier_name='Small',
+        environment_name='Training Environment',
+        hardware_tier_name='Large',
         inputs=[
             Input(name='processed_data', type=FlyteFile[TypeVar('csv')], value=task4['processed_data']),
-            Input(name='epochs', type=int, value=10),
-            Input(name='batch_size', type=int, value=32)
+            Input(name='num_estimators', type=int, value=100)
         ],
         output_specs=[
             Output(name='model', type=FlyteFile[TypeVar('pkl')])
