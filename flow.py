@@ -8,11 +8,11 @@ from typing import TypeVar, NamedTuple
 final_outputs = NamedTuple('final_outputs', model=FlyteFile[TypeVar('pkl')])
 
 # NOTE: REPLACE THESE VARIABLES WITH YOUR DATASET ID & SNAPSHOT VERSION
-dataset_id = '66b284ee06a5593e3c8f8386'
+dataset_id = '<DATASET ID>'
 dataset_snapshot_version = 1
 
 @workflow
-def training_workflow(data_path_a: str, data_path_b: str) -> final_outputs: 
+def model_training(data_path_a: str, data_path_b: str) -> final_outputs: 
     '''
     Sample data preparation and training flow. This flow:
     
@@ -23,7 +23,7 @@ def training_workflow(data_path_a: str, data_path_b: str) -> final_outputs:
 
     To run this flow, execute the following line in the terminal
 
-    pyflyte run --remote workflow.py training_workflow --data_path_a /mnt/data/snapshots/flows/1/datasetA.csv --data_path_b /mnt/data/snapshots/flows/1/datasetB.csv
+    pyflyte run --remote flow.py model_training --data_path_a /mnt/data/datasetA.csv --data_path_b /mnt/data/datasetB.csv
 
     :param data_path_a: Path to datasetA
     :param data_path_b: Path to datasetB 
@@ -41,7 +41,7 @@ def training_workflow(data_path_a: str, data_path_b: str) -> final_outputs:
         output_specs=[
             Output(name='datasetA', type=FlyteFile[TypeVar('csv')])
         ],
-        dataset_snapshots=[DatasetSnapshot(Id=dataset_id, Version=dataset_snapshot_version)],
+        dataset_snapshots=[], # [DatasetSnapshot(Id=dataset_id, Version=dataset_snapshot_version)], (we will uncomment during training)
         use_project_defaults_for_omitted=True
     )
 
@@ -56,7 +56,7 @@ def training_workflow(data_path_a: str, data_path_b: str) -> final_outputs:
         output_specs=[
             Output(name='datasetB', type=FlyteFile[TypeVar('csv')])
         ],
-        dataset_snapshots=[DatasetSnapshot(Id=dataset_id, Version=dataset_snapshot_version)],
+        dataset_snapshots=[], # [DatasetSnapshot(Id=dataset_id, Version=dataset_snapshot_version)], (we will uncomment during training)
         use_project_defaults_for_omitted=True
     )
 

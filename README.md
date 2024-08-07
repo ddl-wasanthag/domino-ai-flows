@@ -10,7 +10,7 @@ This repo mocks a sample AI data prepartion and training script using Domino Flo
 To run the flow, execute the following command in a workspace using the Domino Standard Environment: 
 
 ```
-pyflyte run --remote workflow.py training_workflow --data_path_a /mnt/code/data/datasetA.csv --data_path_b /mnt/code/data/datasetB.csv
+pyflyte run --remote flow.py model_training --data_path_a /mnt/data/datasetA.csv --data_path_b /mnt/data/datasetB.csv
 ```
 
 Once you run the command, navigate to `Flows page > Runs pivot > Run name` to monitor the flow execution:
@@ -23,7 +23,7 @@ Clicking on the `View graph` button at the top-right of the runs view will take 
 
 # Flow Definition
 
-The flow is defined in the `workflow.py` file. The sample flow contains 5 tasks - two for loading in data, one for merging the data together, one for preprocessing the data, and one for model training. Each task ultimately triggers a Domino Job and returns the outputs. We'll go through each of the tasks in detail.
+The flow is defined in the `flow.py` file. The sample flow contains 5 tasks - two for loading in data, one for merging the data together, one for preprocessing the data, and one for model training. Each task ultimately triggers a Domino Job and returns the outputs. We'll go through each of the tasks in detail.
 
 **Data Loading**
 
