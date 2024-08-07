@@ -19,7 +19,7 @@ def model_training(data_path_a: str, data_path_b: str) -> final_outputs:
 
     To run this flow, execute the following line in the terminal
 
-    pyflyte run --remote flow.py model_training --data_path_a /mnt/imported/data/snapshots/training-data/1/datasetA.csv --data_path_b /mnt/imported/data/snapshots/training-data/1/datasetB.csv
+    pyflyte run --remote flow.py model_training --data_path_a /mnt/code/data/datasetA.csv --data_path_b /mnt/code/data/datasetB.csv
 
     :param data_path_a: Path to datasetA
     :param data_path_b: Path to datasetB 
