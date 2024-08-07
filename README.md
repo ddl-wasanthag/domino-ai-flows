@@ -10,7 +10,7 @@ This repo mocks a sample AI data prepartion and training script using Domino Flo
 To run the flow, execute the following command in a workspace using the Domino Standard Environment: 
 
 ```
-pyflyte run --remote flow.py model_training --data_path_a /mnt/data/datasetA.csv --data_path_b /mnt/data/datasetB.csv
+pyflyte run --remote flow.py model_training --data_path_a /mnt/code/data/datasetA.csv --data_path_b /mnt/code/data/datasetB.csv
 ```
 
 Once you run the command, navigate to `Flows page > Runs pivot > Run name` to monitor the flow execution:

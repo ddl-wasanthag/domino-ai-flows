@@ -8,7 +8,7 @@ from typing import TypeVar, NamedTuple
 final_outputs = NamedTuple('final_outputs', model=FlyteFile[TypeVar('pkl')])
 
 # NOTE: REPLACE THESE VARIABLES WITH YOUR DATASET ID & SNAPSHOT VERSION
-dataset_id = '<DATASET ID>'
+dataset_id = 'YOUR_DATASET_ID'
 dataset_snapshot_version = 1
 
 @workflow
@@ -23,7 +23,7 @@ def model_training(data_path_a: str, data_path_b: str) -> final_outputs:
 
     To run this flow, execute the following line in the terminal
 
-    pyflyte run --remote flow.py model_training --data_path_a /mnt/data/datasetA.csv --data_path_b /mnt/data/datasetB.csv
+    pyflyte run --remote flow.py model_training --data_path_a /mnt/code/data/datasetA.csv --data_path_b /mnt/code/data/datasetB.csv
 
     :param data_path_a: Path to datasetA
     :param data_path_b: Path to datasetB 
