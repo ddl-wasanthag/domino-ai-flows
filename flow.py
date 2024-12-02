@@ -5,8 +5,6 @@ from flytekit.types.file import FlyteFile
 from flytekit.types.directory import FlyteDirectory
 from typing import TypeVar, NamedTuple
 
-DataArtifact = Artifact("Merged Data", DATA)
-ModelArtifact = Artifact("Random Forest Model", MODEL)
 
 final_outputs = NamedTuple('final_outputs', model=FlyteFile[TypeVar('pkl')])
 
@@ -50,7 +48,7 @@ def model_training(data_path_a: str, data_path_b: str) -> final_outputs:
         inputs=[
             Input(name='datasetA', type=FlyteFile[TypeVar('csv')], value=task1['datasetA']),
             Input(name='datasetB', type=FlyteFile[TypeVar('csv')], value=task2['datasetB'])],
-        output_specs=[Output(name='merged_data', type=DataArtifact.File(name="merged_data"))],
+        output_specs=[Output(name='merged_data', type=FlyteFile[TypeVar('csv')])],
         use_project_defaults_for_omitted=True
     )
 
