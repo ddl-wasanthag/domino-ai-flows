@@ -1,9 +1,9 @@
-from flytekitplugins.domino.helpers import Input, Output, run_domino_job_task
-from flytekitplugins.domino.task import DatasetSnapshot
 from flytekit import workflow
 from flytekit.types.file import FlyteFile
-from flytekit.types.directory import FlyteDirectory
 from typing import TypeVar, NamedTuple
+from flytekitplugins.domino.helpers import Input, Output, run_domino_job_task
+from flytekitplugins.domino.task import DominoJobConfig, DominoJobTask, GitRef, EnvironmentRevisionSpecification, EnvironmentRevisionType, DatasetSnapshot
+from flytekitplugins.domino.artifact import Artifact, DATA, MODEL, REPORT
 
 DataArtifact = Artifact("Merged Data", DATA)
 ModelArtifact = Artifact("Random Forest Model", MODEL)
@@ -22,7 +22,7 @@ def model_training(data_path_a: str, data_path_b: str) -> final_outputs:
 
     To run this flow, execute the following line in the terminal
 
-    pyflyte run --remote --name test-run flow.py model_training --data_path_a /mnt/code/data/datasetA.csv --data_path_b /mnt/code/data/datasetB.csv
+    pyflyte run --remote --name test-run flow_dev.py model_training --data_path_a /mnt/code/data/datasetA.csv --data_path_b /mnt/code/data/datasetB.csv
     '''
 
     task1 = run_domino_job_task(
