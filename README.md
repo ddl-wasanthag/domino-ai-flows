@@ -5,7 +5,8 @@ This repo mocks a sample AI data prepartion and training script using Domino Flo
 1. Loads two datasets in from different sources
 2. Merges the data together
 3. Does some data preprocessing
-4. Trains a model using the processed data
+4. Trains a Random Forest model using the processed data
+5. Outputs the processed data csv and model file as Flow Artifacts
 
 To run the flow, execute the following command in a workspace using the Domino Standard Environment: 
 
