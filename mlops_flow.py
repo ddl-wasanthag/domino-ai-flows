@@ -17,6 +17,7 @@ def model_training_devv(data_path_a: str, data_path_b: str):
         2. Merges the data together
         3. Does some data preprocessing
         4. Trains a model using the processed data
+        5. Output the merged data and model as Flow Artifacts
 
     To run this flow, execute the following line in the terminal
 
