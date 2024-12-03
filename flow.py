@@ -18,8 +18,6 @@ def model_training(data_path_a: str, data_path_b: str) -> final_outputs:
         3. Does some data preprocessing
         4. Trains a model using the processed data
 
-    To run this flow, execute the following line in the terminal
-
     pyflyte run --remote --name test-run flow.py model_training --data_path_a /mnt/code/data/datasetA.csv --data_path_b /mnt/code/data/datasetB.csv
     '''
 

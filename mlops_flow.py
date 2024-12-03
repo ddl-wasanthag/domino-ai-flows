@@ -9,7 +9,7 @@ DataArtifact = Artifact("Merged Data", DATA)
 ModelArtifact = Artifact("Random Forest Model", MODEL)
 
 @workflow
-def model_training_dev(data_path_a: str, data_path_b: str): 
+def model_training_devv(data_path_a: str, data_path_b: str): 
     '''
     Sample data preparation and training flow. This flow:
     
@@ -20,7 +20,7 @@ def model_training_dev(data_path_a: str, data_path_b: str):
 
     To run this flow, execute the following line in the terminal
 
-    pyflyte run --remote  flow_dev.py model_training_dev --data_path_a /mnt/code/data/datasetA.csv --data_path_b /mnt/code/data/datasetB.csv
+    pyflyte run --remote  mlops_flow.py model_training_devv --data_path_a /mnt/code/data/datasetA.csv --data_path_b /mnt/code/data/datasetB.csv
     '''
 
     task1 = run_domino_job_task(
@@ -62,7 +62,7 @@ def model_training_dev(data_path_a: str, data_path_b: str):
     )
 
     task4 = run_domino_job_task(
-        flyte_task_name='Process Data',
+        flyte_task_name='Process Data 2',
         command='python /mnt/code/scripts/process-data.py',
         hardware_tier_name='Medium',
         inputs=[Input(name='merged_data', type=FlyteFile[TypeVar('csv')], value=task3['merged_data'])],
