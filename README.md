@@ -26,6 +26,15 @@ ADD IMAGE AFTER MERGING graph.png
 
 The flow is defined in the `mlops_flow.py` file. The sample flow contains 5 tasks - two for loading in data, one for merging the data together, one for preprocessing the data, and one for model training. Each task ultimately triggers a Domino Job and returns the outputs. We'll go through each of the tasks in detail.
 
+**Define Flow Artifacts**
+
+The code snippet below show the definiton of the two Flow Artifacts that I will populate with certain task outputs.
+
+```
+DataArtifact = Artifact("Merged Data", DATA)
+ModelArtifact = Artifact("Random Forest Model", MODEL)
+```
+
 **Data Loading**
 
 The purpose of the data loading tasks is to load the data into flows and make a snapshot of it to capture the data at its current point in time. The code snippet below shows the definition for the two data loading tasks:
@@ -92,6 +101,8 @@ task3 = run_domino_job_task(
 
 As you can see, the same `run_domino_job_task` function is used again. One thing to note is how the output from the data data loading tasks are referenced via calling `task1['datasetA']` / `task2['datasetB']` and it specified as an input to the data merging task.
 
+You will also notice that we have marked the output of this task as the "Merged Data" Flow Artifact with Artifact type DATA. This will surface this particular output in the Flow Artifacts view.
+
 **Data Preparation**
 
 The next task is to take the merged dataset and perform any necessary data cleaning. The code snippet below shows the definition for the data preprocessing task. 
@@ -132,7 +143,7 @@ task5 = run_domino_job_task(
     )
 ```
 
-The output of the last task is then returned as the final output to the flow. 
+You will also notice that we have marked the output of this task as the "Random Forest Model" Flow Artifact with Artifact type MODEL. This will surface this particular output in the Flow Artifacts view.
 
 # Environment Requirements
 
