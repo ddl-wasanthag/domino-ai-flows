@@ -16,11 +16,11 @@ pyflyte run --remote mlops_flow.py model_training --data_path_a /mnt/code/data/d
 
 Once you run the command, navigate to `Flows page > Workflows pivot > Flow name > Run name` to monitor the flow execution:
 
-ADD IMAGE AFTER MERGING run.png
+![Execution Link](https://github.com/dominodatalab/domino-ai-flows/blob/b1f7baf964400d33708fe013adbe71e9e7618900/screenshots/run.png)
 
 Clicking on the `Graph` pivot will show you a interactive graph view of the flow:
 
-ADD IMAGE AFTER MERGING graph.png
+![Graph Link](https://github.com/dominodatalab/domino-ai-flows/blob/b1f7baf964400d33708fe013adbe71e9e7618900/screenshots/graph.png)
 
 # Flow Definition
 
