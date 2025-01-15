@@ -47,4 +47,18 @@ def model_training(data_path_a: str, data_path_b: str):
         hardware_tier_name="Small"
     )
 
+    task3 = run_domino_job_task(
+        flyte_task_name='Merge Data',
+        command='python /mnt/code/scripts/merge-data.py',
+        inputs=[
+            Input(name='datasetA', type=FlyteFile[TypeVar('csv')], value=task1['datasetA']),
+            Input(name='datasetB', type=FlyteFile[TypeVar('csv')], value=task2['datasetB'])],
+        output_specs=[Output(name='merged_data', type=DataArtifact.File(name="merged_data.csv"))],
+        use_project_defaults_for_omitted=True,
+        environment_name=environment_name,
+         hardware_tier_name='Medium',
+        cache=True,
+        cache_version="1.0"
+    )
+
     return 

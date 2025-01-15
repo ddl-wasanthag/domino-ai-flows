@@ -7,7 +7,7 @@ named_input_1 = "datasetA"
 datasetA_path = "/workflow/inputs/{}".format(named_input_1)
 
 named_input_2 = "datasetB"
-datasetA_path = "/workflow/inputs/{}".format(named_input_2)
+datasetB_path = "/workflow/inputs/{}".format(named_input_2)
 
 # Load data
 a = pd.read_csv(datasetA_path, index_col='Id') 
