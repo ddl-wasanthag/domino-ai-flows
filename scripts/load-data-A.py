@@ -1,21 +1,13 @@
 import os
-import pandas as pd
-from argparse import ArgumentParser
-from flows import read_input, get_output_location
+import shutil
 
-# Argument parser for allowing user to set inputs during location execution
-parser = ArgumentParser(description='Data preparation script.')
-parser.add_argument('--data_path', type=str, default='/mnt/code/data/datasetA.csv', help='Path to the input data. Only used during local testing. Flow triggered jobs will use task inputs.')
-parser.add_argument('--output_folder', type=str, default='/mnt/code/outputs', help='Path to output results. Only used during local testing. Flow triggered jobs will use task output directory.')
-args = parser.parse_args()
+# The name of the Flow input, which Domino places into a file blob under /workflow/inputs
+task_input_name = "data_path"
+input_file = f"/workflow/inputs/{task_input_name}"
 
-# Read data input
-data_path = read_input(name='data_path', args=args)
+# Read input csv to dataframe
+df = pd.read_csv(input_file) 
 
-# Load dataset
-print('Loading in dataset A...')
-df = pd.read_csv(data_path) 
 
 # Write output
-output_location = get_output_location(name='datasetA', args=args)
-df.to_csv(output_location, index=False)
+df.to_csv(workflow/outputs/datasetA, index=False)
