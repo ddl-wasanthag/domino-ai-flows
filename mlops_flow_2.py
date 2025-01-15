@@ -61,4 +61,16 @@ def model_training(data_path_a: str, data_path_b: str):
         cache_version="1.0"
     )
 
+    task4 = run_domino_job_task(
+        flyte_task_name='Process Data',
+        command='python /mnt/code/scripts/process-data.py',
+        inputs=[Input(name='merged_data', type=FlyteFile[TypeVar('csv')], value=task3['merged_data'])],
+        output_specs=[Output(name='processed_data', type=FlyteFile[TypeVar('csv')])],
+        use_project_defaults_for_omitted=True,
+        environment_name=environment_name,
+        hardware_tier_name='Medium',
+        cache=True,
+        cache_version="1.0"
+    )
+
     return 
