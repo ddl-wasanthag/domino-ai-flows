@@ -10,4 +10,4 @@ df = pd.read_csv(input_file)
 
 
 # Write output
-df.to_csv('workflow/outputs/datasetA.csv', index=False)
+df.to_csv('/workflow/outputs/datasetA.csv', index=False)
