@@ -34,7 +34,9 @@ def model_training(data_path_a: str, data_path_b: str):
         output_specs=[Output(name='datasetA', type=FlyteFile[TypeVar('csv')])],
         use_project_defaults_for_omitted=True,
         environment_name=environment_name,
-        hardware_tier_name="Small"
+        hardware_tier_name="Small",
+        cache=True,
+        cache_version="1.0"
     )
 
     task2 = run_domino_job_task(
@@ -44,7 +46,9 @@ def model_training(data_path_a: str, data_path_b: str):
         output_specs=[Output(name='datasetB', type=FlyteFile[TypeVar('csv')])],
         use_project_defaults_for_omitted=True,
         environment_name=environment_name,
-        hardware_tier_name="Small"
+        hardware_tier_name="Small",
+        cache=True,
+        cache_version="1.0"
     )
 
     task3 = run_domino_job_task(
@@ -70,7 +74,7 @@ def model_training(data_path_a: str, data_path_b: str):
         environment_name=environment_name,
         hardware_tier_name='Medium',
         cache=True,
-        cache_version="1.0"
+        cache_version="2.0"
     )
 
     return 
