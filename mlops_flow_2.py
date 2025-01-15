@@ -37,4 +37,14 @@ def model_training(data_path_a: str, data_path_b: str):
         hardware_tier_name="Small"
     )
 
+    task2 = run_domino_job_task(
+        flyte_task_name='Load Data B',
+        command='python /mnt/code/scripts/load-data-B.py',
+        inputs=[Input(name='data_path', type=str, value=data_path_b)],
+        output_specs=[Output(name='datasetB', type=FlyteFile[TypeVar('csv')])],
+        use_project_defaults_for_omitted=True,
+        environment_name=environment_name,
+        hardware_tier_name="Small"
+    )
+
     return 
