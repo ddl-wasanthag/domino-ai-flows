@@ -1,5 +1,6 @@
 import os
 import shutil
+import pandas as pd
 
 # The name of the Flow input, which Domino places into a file blob under /workflow/inputs
 task_input_name = "data_path"

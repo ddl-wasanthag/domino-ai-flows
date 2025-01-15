@@ -34,9 +34,7 @@ def model_training(data_path_a: str, data_path_b: str):
         output_specs=[Output(name='datasetA', type=FlyteFile[TypeVar('csv')])],
         use_project_defaults_for_omitted=True,
         environment_name=environment_name,
-        hardware_tier_name="Small",
-        cache=True,
-        cache_version="1.0"
+        hardware_tier_name="Small"
     )
 
     return 
