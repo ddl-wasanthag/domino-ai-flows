@@ -1,21 +1,17 @@
 import os
+import shutil
 import pandas as pd
-from argparse import ArgumentParser
-from flows import read_input, get_output_location
 
-# Argument parser for allowing user to set inputs during location execution
-parser = ArgumentParser(description='Data preparation script.')
-parser.add_argument('--data_path', type=str, default='/mnt/code/data/datasetA.csv', help='Path to the input data. Only used during local testing. Flow triggered jobs will use task inputs.')
-parser.add_argument('--output_folder', type=str, default='/mnt/code/outputs', help='Path to output results. Only used during local testing. Flow triggered jobs will use task output directory.')
-args = parser.parse_args()
+# Read the location of the csv from the task input blob
+input_name = "data_path"
+input_location = f"/workflow/inputs/{input_name}"
+with open(input_location, "r") as file:
+    input_csv = file.read()
 
-# Read data input
-data_path = read_input(name='data_path', args=args)
+# Read input csv to dataframe
+df = pd.read_csv(input_csv) 
 
-# Load dataset
-print('Loading in dataset A...')
-df = pd.read_csv(data_path) 
 
-# Write output
-output_location = get_output_location(name='datasetA', args=args)
-df.to_csv(output_location, index=False)
+# Write to Flow output
+df.to_csv('/workflow/outputs/datasetA.csv', index=False)
+
