@@ -1,5 +1,4 @@
 import os
-import shutil
 import pandas as pd
 
 # Read the location of the csv from the task input blob
