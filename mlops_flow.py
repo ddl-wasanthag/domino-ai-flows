@@ -25,7 +25,7 @@ def model_training(data_path_a: str, data_path_b: str):
 
     To run this flow, execute the following line in the terminal
 
-    pyflyte run --remote  mlops_flow_2.py model_training --data_path_a /mnt/code/data/datasetA.csv --data_path_b /mnt/code/data/datasetB.csv
+    pyflyte run --remote  mlops_flow.py model_training --data_path_a /mnt/code/data/datasetA.csv --data_path_b /mnt/code/data/datasetB.csv
     '''
 
     task1 = run_domino_job_task(
@@ -75,7 +75,7 @@ def model_training(data_path_a: str, data_path_b: str):
         environment_name=environment_name,
         hardware_tier_name='Medium',
         cache=True,
-        cache_version="2.0"
+        cache_version="1.0"
     )
 
     task5 = run_domino_job_task(
