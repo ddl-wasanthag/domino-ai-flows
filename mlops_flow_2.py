@@ -5,9 +5,10 @@ from flytekitplugins.domino.helpers import Input, Output, run_domino_job_task
 from flytekitplugins.domino.task import DominoJobConfig, DominoJobTask, GitRef, EnvironmentRevisionSpecification, EnvironmentRevisionType, DatasetSnapshot
 from flytekitplugins.domino.artifact import Artifact, DATA, MODEL, REPORT
 
+# Set the name of this variable to the name of your Domino's standard environment. 
 environment_name="6.0 Domino Standard Environment Py3.10 R4.4"
 
-
+# This calls the Artifact library, to create two named Flow Artifacts that we can label our merged data and model files as. 
 DataArtifact = Artifact("Merged Data", DATA)
 ModelArtifact = Artifact("Random Forest Model", MODEL)
 
@@ -60,7 +61,7 @@ def model_training(data_path_a: str, data_path_b: str):
         output_specs=[Output(name='merged_data', type=DataArtifact.File(name="merged_data.csv"))],
         use_project_defaults_for_omitted=True,
         environment_name=environment_name,
-         hardware_tier_name='Medium',
+        hardware_tier_name='Medium',
         cache=True,
         cache_version="1.0"
     )

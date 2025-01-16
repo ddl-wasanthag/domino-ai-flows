@@ -49,6 +49,6 @@ print('\nClassification Report:')
 print(classification_report(y_test, y_pred, target_names=label_encoder.classes_))
 
 # Write the mode as output
-output_location = f"/workflow/inputs/model"
+output_location = f"/workflow/outputs/model"
 with open(output_location, 'wb') as file:
     pickle.dump(model, file)
