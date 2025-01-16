@@ -2,8 +2,8 @@ import os
 import shutil
 import pandas as pd
 
-# Read data input
 
+# Read data input
 named_input = "merged_data"
 merged_data_path = "/workflow/inputs/{}".format(named_input)
 

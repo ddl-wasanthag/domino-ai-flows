@@ -77,4 +77,18 @@ def model_training(data_path_a: str, data_path_b: str):
         cache_version="2.0"
     )
 
+    task5 = run_domino_job_task(
+        flyte_task_name='Train Model',
+        command='python /mnt/code/scripts/train-model.py',
+        inputs=[
+            Input(name='processed_data', type=FlyteFile[TypeVar('csv')], value=task4['processed_data']),
+            Input(name='num_estimators', type=int, value=100)],
+        output_specs=[Output(name='model', type=ModelArtifact.File(name="model.pkl"))],
+        use_project_defaults_for_omitted=True,
+        environment_name=environment_name,
+        hardware_tier_name='Large',
+        cache=True,
+        cache_version="1.0"
+    )
+
     return 
