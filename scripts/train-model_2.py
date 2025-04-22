@@ -52,31 +52,25 @@ with mlflow.start_run():
     mlflow.log_param("n_estimators", num_estimator_value)
     mlflow.log_param("random_state", 42)
 
-# Train a model (e.g., Random Forest Classifier)
-model = RandomForestClassifier(random_state=42, n_estimators=int(num_estimator_value))
-model.fit(X_train, y_train)
+    # Train a model (e.g., Random Forest Classifier)
+    model = RandomForestClassifier(random_state=42, n_estimators=int(num_estimator_value))
+    model.fit(X_train, y_train)
 
+    # Evaluate the model on the testing set
+    y_pred = model.predict(X_test)
 
+    # Calculate accuracy
+    accuracy = accuracy_score(y_test, y_pred)
+    print('\nModel Accuracy on Test Set:', accuracy)
+    print('\nClassification Report:')
+    print(classification_report(y_test, y_pred, target_names=label_encoder.classes_))
 
-# Evaluate the model on the testing set
-y_pred = model.predict(X_test)
+    # Log metrics and artifacts to MLflow
+    mlflow.log_metric("accuracy", accuracy)
 
+    # Log the trained model
+    mlflow.sklearn.log_model(model, artifact_path="random_forest_model")
 
-
-# Calculate accuracy
-accuracy = accuracy_score(y_test, y_pred)
-print('\nModel Accuracy on Test Set:', accuracy)
-print('\nClassification Report:')
-print(classification_report(y_test, y_pred, target_names=label_encoder.classes_))
-
-
-
-# Log metrics and artifacts to MLflow
-mlflow.log_metric("accuracy", accuracy)
-
-
-# Log the trained model
-mlflow.sklearn.log_model(model, artifact_path="random_forest_model")
 
 
 # Write the model as output
