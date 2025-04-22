@@ -72,7 +72,7 @@ print(classification_report(y_test, y_pred, target_names=label_encoder.classes_)
 
 
 # Log metrics and artifacts to MLflow
-    mlflow.log_metric("accuracy", accuracy)
+mlflow.log_metric("accuracy", accuracy)
 
 
 # Log the trained model
