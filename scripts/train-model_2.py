@@ -74,7 +74,12 @@ print(classification_report(y_test, y_pred, target_names=label_encoder.classes_)
 # Log metrics and artifacts to MLflow
     mlflow.log_metric("accuracy", accuracy)
 
-# Write the mode as output
+
+# Log the trained model
+mlflow.sklearn.log_model(model, artifact_path="random_forest_model")
+
+
+# Write the model as output
 output_location = f"/workflow/outputs/model"
 with open(output_location, 'wb') as file:
     pickle.dump(model, file)
