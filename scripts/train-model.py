@@ -10,8 +10,7 @@ import mlflow
 import mlflow.sklearn
 
 # Create MLFlow experiment 
-EXPERIMENT_NAME = "sklearn_random_forest_experiment"
-mlflow.set_experiment(EXPERIMENT_NAME)
+mlflow.set_experiment(experiment_name=os.environ.get('DOMINO_PROJECT_NAME') + " " + os.environ.get('DOMINO_STARTING_USERNAME'))
 
 # Read inputs
 named_input_1 = "processed_data"
