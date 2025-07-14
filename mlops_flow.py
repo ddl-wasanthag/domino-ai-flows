@@ -9,7 +9,7 @@ from flytekitplugins.domino.artifact import Artifact, DATA, MODEL, REPORT
 environment_name="6.0 Domino Standard Environment Py3.10 R4.4"
 
 # Set if you want caching on or off. 
-cache=False
+cache=True
 
 # This calls the Artifact library, to create two named Flow Artifacts that we can label our merged data and model files as. 
 DataArtifact = Artifact("Merged Data", DATA)
