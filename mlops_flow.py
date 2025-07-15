@@ -6,7 +6,7 @@ from flytekitplugins.domino.task import DominoJobConfig, DominoJobTask, GitRef, 
 from flytekitplugins.domino.artifact import Artifact, DATA, MODEL, REPORT
 
 # Set the name of this variable to the name of your Domino's standard environment
-environment_name="6.0 Domino Standard Environment Py3.10 R4.4"
+environment_name="6.1 Domino Standard Environment Py3.10 R4.5"
 
 # Set if you want caching on or off. 
 cache=True
