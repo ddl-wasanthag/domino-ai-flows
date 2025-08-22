@@ -6,7 +6,10 @@ from flytekitplugins.domino.task import DominoJobConfig, DominoJobTask, GitRef, 
 from flytekitplugins.domino.artifact import Artifact, DATA, MODEL, REPORT
 
 # Set the name of this variable to the name of your Domino's standard environment
-#environment_name="6.0 Domino Standard Environment Py3.10 R4.4"
+environment_name="Domino Standard Environment Py3.10 R4.5"
+
+# Set the name of this variable to the name of one of your Domino's hardware tiers
+hardware_tier_name="Small"
 
 # Set if you want caching on or off. 
 cache=True
@@ -37,8 +40,8 @@ def model_training(data_path_a: str, data_path_b: str):
         inputs=[Input(name='data_path', type=str, value=data_path_a)],
         output_specs=[Output(name='datasetA', type=FlyteFile[TypeVar('csv')])],
         use_project_defaults_for_omitted=True,
-        #environment_name=environment_name,
-        #hardware_tier_name="Small",
+        environment_name=environment_name,
+        hardware_tier_name=hardware_tier_name,
         cache=cache,
         cache_version="1.0"
     )
@@ -49,8 +52,8 @@ def model_training(data_path_a: str, data_path_b: str):
         inputs=[Input(name='data_path', type=str, value=data_path_b)],
         output_specs=[Output(name='datasetB', type=FlyteFile[TypeVar('csv')])],
         use_project_defaults_for_omitted=True,
-        #environment_name=environment_name,
-        #hardware_tier_name="Small",
+        environment_name=environment_name,
+        hardware_tier_name=hardware_tier_name,
         cache=cache,
         cache_version="1.0"
     )
@@ -63,8 +66,8 @@ def model_training(data_path_a: str, data_path_b: str):
             Input(name='datasetB', type=FlyteFile[TypeVar('csv')], value=task2['datasetB'])],
         output_specs=[Output(name='merged_data', type=DataArtifact.File(name="merged_data.csv"))],
         use_project_defaults_for_omitted=True,
-        #environment_name=environment_name,
-        #hardware_tier_name='Medium',
+        environment_name=environment_name,
+        hardware_tier_name=hardware_tier_name,
         cache=cache,
         cache_version="1.0"
     )
@@ -75,8 +78,8 @@ def model_training(data_path_a: str, data_path_b: str):
         inputs=[Input(name='merged_data', type=FlyteFile[TypeVar('csv')], value=task3['merged_data'])],
         output_specs=[Output(name='processed_data', type=FlyteFile[TypeVar('csv')])],
         use_project_defaults_for_omitted=True,
-        #environment_name=environment_name,
-        #hardware_tier_name='Medium',
+        environment_name=environment_name,
+        hardware_tier_name=hardware_tier_name,
         cache=cache,
         cache_version="1.0"
     )
@@ -89,8 +92,8 @@ def model_training(data_path_a: str, data_path_b: str):
             Input(name='num_estimators', type=int, value=100)],
         output_specs=[Output(name='model', type=ModelArtifact.File(name="model.pkl"))],
         use_project_defaults_for_omitted=True,
-        #environment_name=environment_name,
-        #hardware_tier_name='Large',
+        environment_name=environment_name,
+        hardware_tier_name=hardware_tier_name,
         cache=cache,
         cache_version="1.0"
     )
