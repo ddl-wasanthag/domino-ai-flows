@@ -3,7 +3,7 @@ from flytekit.types.file import FlyteFile
 from typing import TypeVar, NamedTuple
 from flytekitplugins.domino.helpers import Input, Output, run_domino_job_task
 from flytekitplugins.domino.task import DominoJobConfig, DominoJobTask, GitRef, EnvironmentRevisionSpecification, EnvironmentRevisionType, DatasetSnapshot
-from flytekitplugins.domino.artifact import Artifact, DATA, MODEL, REPORT
+from flytekitplugins.domino.artifact import Artifact, DATA, MODEL, REPORT, ExportArtifactToDatasetsSpec, run_launch_export_artifacts_task
 
 
 # As this is considered a PROD Flow definition, we do not the use_project_defaults_for_omitted parameter
@@ -20,7 +20,7 @@ dfs_repo_commit_id="52ee5113a38de2dddbd051b42623c23065f28803"   # Change to the 
 
 
 # Set if you want caching on or off for all your tasks.
-cache=True
+cache=False
 
 # This calls the Artifact library, to create two named Flow Artifacts that we can label our merged data and model files as. 
 DataArtifact = Artifact("Merged Data", DATA)
@@ -39,7 +39,7 @@ def model_training(data_path_a: str, data_path_b: str):
 
     To run this flow, execute the following line in the terminal
 
-    pyflyte run --remote  mlops_flow_prod.py model_training --data_path_a /mnt/code/data/datasetA.csv --data_path_b /mnt/code/data/datasetB.csv
+    pyflyte run --remote  mlops_flow_prod_export.py model_training --data_path_a /mnt/code/data/datasetA.csv --data_path_b /mnt/code/data/datasetB.csv
     '''
 
     task1 = run_domino_job_task(
@@ -49,7 +49,7 @@ def model_training(data_path_a: str, data_path_b: str):
         output_specs=[Output(name='datasetA', type=FlyteFile[TypeVar('csv')])],
         environment_name=environment_name,
         environment_revision_id=environment_revision_id,
-        hardware_tier_name="Small",
+        hardware_tier_name=hardware_tier_name,
         dataset_snapshots=[],
         main_git_repo_ref=GitRef(Type=GitRef_type, Value=GitRef_value),
         volume_size_gib=volume_size_gib,
@@ -66,7 +66,7 @@ def model_training(data_path_a: str, data_path_b: str):
         output_specs=[Output(name='datasetB', type=FlyteFile[TypeVar('csv')])],
         environment_name=environment_name,
         environment_revision_id=environment_revision_id,
-        hardware_tier_name="Small",
+        hardware_tier_name=hardware_tier_name,
         dataset_snapshots=[],
         main_git_repo_ref=GitRef(Type=GitRef_type, Value=GitRef_value),
         volume_size_gib=volume_size_gib,
@@ -85,7 +85,7 @@ def model_training(data_path_a: str, data_path_b: str):
         output_specs=[Output(name='merged_data', type=DataArtifact.File(name="merged_data.csv"))],
         environment_name=environment_name,
         environment_revision_id=environment_revision_id,
-        hardware_tier_name="Medium",
+        hardware_tier_name=hardware_tier_name,
         dataset_snapshots=[],
         main_git_repo_ref=GitRef(Type=GitRef_type, Value=GitRef_value),
         volume_size_gib=volume_size_gib,
@@ -102,7 +102,7 @@ def model_training(data_path_a: str, data_path_b: str):
         output_specs=[Output(name='processed_data', type=FlyteFile[TypeVar('csv')])],
         environment_name=environment_name,
         environment_revision_id=environment_revision_id,
-        hardware_tier_name="Medium",
+        hardware_tier_name=hardware_tier_name,
         dataset_snapshots=[],
         main_git_repo_ref=GitRef(Type=GitRef_type, Value=GitRef_value),
         volume_size_gib=volume_size_gib,
@@ -121,7 +121,7 @@ def model_training(data_path_a: str, data_path_b: str):
         output_specs=[Output(name='model', type=ModelArtifact.File(name="model.pkl"))],
         environment_name=environment_name,
         environment_revision_id=environment_revision_id,
-        hardware_tier_name="Large",
+        hardware_tier_name=hardware_tier_name,
         dataset_snapshots=[],
         main_git_repo_ref=GitRef(Type=GitRef_type, Value=GitRef_value),
         volume_size_gib=volume_size_gib,
@@ -129,6 +129,18 @@ def model_training(data_path_a: str, data_path_b: str):
         external_data_volumes=[],
         cache=cache,
         cache_version="1.0"
+    )
+
+    run_launch_export_artifacts_task(
+        spec_list=[
+            ExportArtifactToDatasetsSpec(
+                artifact=DataArtifact,
+                dataset_id="68a8b82999bfa44f6f33903c",  # Change to the ID of the Dataset in your project you want to export the DATA Artifact to
+            ),
+        ],
+        environment_name=environment_name,
+        hardware_tier_name=hardware_tier_name,
+        use_project_defaults_for_omitted=True,
     )
 
     return 
