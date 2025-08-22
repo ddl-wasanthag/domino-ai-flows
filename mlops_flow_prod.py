@@ -10,12 +10,13 @@ from flytekitplugins.domino.artifact import Artifact, DATA, MODEL, REPORT
 # and explictly set every required parameter in the task defintion to ensure reproducability.
 # These are the additional parameters that need to be explicitly set of each task. 
 
-environment_name="6.1 Domino Standard Environment Py3.10 R4.5"  # Change to the name of your deployments Domino Standard Environment
-environment_revision_id="68653784b616683d10d9549c"              # Change to the latest revision ID of your deployments Domino Standard Environment
-GitRef_type="branches"
-GitRef_value="main"
+environment_name="Domino Standard Environment Py3.10 R4.5"  # Change to the name of your deployments Domino Standard Environment
+environment_revision_id="68a771f590d3cf5ff19c5a17"              # Change to the latest revision ID of your deployments Domino Standard Environment
+hardware_tier_name="Small"                                 # Change to the name of one of your Domino's hardware tiers
+GitRef_type="commitId"                                     
+GitRef_value="c4f273e63e3267d079ebb7c5e5dbcef600521829"   # Change to the commitId of main Git repository 
 volume_size_gib=10
-dfs_repo_commit_id="210c74f00622f1e509e8a3fed280b11bd05ff9f9"   # Change to the latest commit ID of the Artifacts file system in your project
+dfs_repo_commit_id="52ee5113a38de2dddbd051b42623c23065f28803"   # Change to the latest commit ID of the Artifacts file system in your project
 
 
 # Set if you want caching on or off for all your tasks.
