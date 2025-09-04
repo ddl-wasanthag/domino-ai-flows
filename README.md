@@ -147,7 +147,7 @@ You will also notice that we have marked the output of this task as the "Random 
 
 # Environment Requirements
 
-The project just requires the `6.0 Domino Standard Environment` which comes included with all Domino deployments. Your 6.0 Standard Environment may not have this exact name. Change this parameter to match the name of your 6.0+ environment. 
+The project just requires the `6.1.1 Domino Standard Environment` as it contains the Flyte SDK. Your 6.1.1 Standard Environment may not have this exact name. Change this parameter to match the name of your 6.1.1+ environment. 
 
 # Hardware Requirements
 
