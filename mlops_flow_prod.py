@@ -10,13 +10,13 @@ from flytekitplugins.domino.artifact import Artifact, DATA, MODEL, REPORT
 # and explictly set every required parameter in the task defintion to ensure reproducability.
 # These are the additional parameters that need to be explicitly set of each task. 
 
-environment_name="Domino Standard Environment Py3.10 R4.5"  # Change to the name of your deployments Domino Standard Environment
-environment_revision_id="68a771f590d3cf5ff19c5a17"              # Change to the latest revision ID of your deployments Domino Standard Environment
+environment_name="Domino Standard Environment Py3.10 R4.5 - Latest Cloud Release"  # Change to the name of your deployments Domino Standard Environment
+environment_revision_id="68cb02b5536add3e634e7cd1"              # Change to the latest revision ID of your deployments Domino Standard Environment
 hardware_tier_name="Small"                                 # Change to the name of one of your Domino's hardware tiers
 GitRef_type="commitId"                                     
 GitRef_value="c4f273e63e3267d079ebb7c5e5dbcef600521829"   # Change to the commitId of main Git repository 
 volume_size_gib=10
-dfs_repo_commit_id="52ee5113a38de2dddbd051b42623c23065f28803"   # Change to the latest commit ID of the Artifacts file system in your project
+dfs_repo_commit_id="8add2e00c1046b552149b669fd728de488b4d001"   # Change to the latest commit ID of the Artifacts file system in your project
 
 
 # Set if you want caching on or off for all your tasks.
@@ -49,7 +49,7 @@ def model_training(data_path_a: str, data_path_b: str):
         output_specs=[Output(name='datasetA', type=FlyteFile[TypeVar('csv')])],
         environment_name=environment_name,
         environment_revision_id=environment_revision_id,
-        hardware_tier_name="Small",
+        hardware_tier_name="Medium",
         dataset_snapshots=[],
         main_git_repo_ref=GitRef(Type=GitRef_type, Value=GitRef_value),
         volume_size_gib=volume_size_gib,
@@ -66,7 +66,7 @@ def model_training(data_path_a: str, data_path_b: str):
         output_specs=[Output(name='datasetB', type=FlyteFile[TypeVar('csv')])],
         environment_name=environment_name,
         environment_revision_id=environment_revision_id,
-        hardware_tier_name="Small",
+        hardware_tier_name="5 GPUs",
         dataset_snapshots=[],
         main_git_repo_ref=GitRef(Type=GitRef_type, Value=GitRef_value),
         volume_size_gib=volume_size_gib,
@@ -77,7 +77,7 @@ def model_training(data_path_a: str, data_path_b: str):
     )
 
     task3 = run_domino_job_task(
-        flyte_task_name='Merge Data',
+        flyte_task_name='Merge Data 2',
         command='python /mnt/code/scripts/merge-data.py',
         inputs=[
             Input(name='datasetA', type=FlyteFile[TypeVar('csv')], value=task1['datasetA']),
